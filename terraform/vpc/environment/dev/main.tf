@@ -14,14 +14,35 @@ terraform {
   }
 }
 
-resource "aws_iam_user" "sumitpaleks" {
-  name = "sumit"
-  count = 2
-  path = "/system/"
+resource "aws_iam_user" "user" {
+  name = "Test-user"
+  path = "/"
 
+  tags = {
+    tag-key = "tag-value"
+  }
 }
 
-output "arns" {
-  value = aws_iam_user.sumitpaleks[*].name
+resource "aws_iam_access_key" "user" {
+  user = aws_iam_user.user.name
+}
 
+resource "aws_iam_user_policy" "user_ro" {
+  name = "test"
+  user = aws_iam_user.user.name
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "ec2:Describe*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
 }
