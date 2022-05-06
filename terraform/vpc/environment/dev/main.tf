@@ -14,14 +14,14 @@ terraform {
   }
 }
 
-resource "aws_iam_user" "sumitpal123" {
-  name = "iamuser.${count.index}"
+resource "aws_iam_user" "sumitpaleks" {
+  name = "sumit"
   count = 2
   path = "/system/"
 
 }
 
 output "arns" {
-  value = aws_iam_user.sumitpal123[*].name
+  value = aws_iam_user.sumitpaleks[*].name
 
 }
