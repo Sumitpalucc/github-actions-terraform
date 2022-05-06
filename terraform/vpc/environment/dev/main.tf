@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-south-1"
 }
 
 ### Backend ###
@@ -8,13 +8,13 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "sumitremotebackend"
-    key = "sumitremotebackend.tfstate"
+    bucket = "myrestatebucket1"
+    key = "myrestatebucket1.tfstate"
     region = "ap-south-1"
   }
 }
 
-resource "aws_iam_user" "sumitpal" {
+resource "aws_iam_user" "sumit123" {
   name = "iamuser.${count.index}"
   count = 2
   path = "/system/"
@@ -22,6 +22,6 @@ resource "aws_iam_user" "sumitpal" {
 }
 
 output "arns" {
-  value = aws_iam_user.sumitpal[*].name
+  value = aws_iam_user.sumitpal123[*].name
 
 }
