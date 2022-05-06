@@ -14,7 +14,7 @@ terraform {
   }
 }
 
-resource "aws_iam_user" "sumit123" {
+resource "aws_iam_user" "sumitpal123" {
   name = "iamuser.${count.index}"
   count = 2
   path = "/system/"
