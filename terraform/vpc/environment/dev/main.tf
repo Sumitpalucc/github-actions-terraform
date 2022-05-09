@@ -2,47 +2,20 @@ provider "aws" {
   region = "ap-south-1"
 }
 
-### Backend ###
-# S3
-###############
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+  instance_tenancy = "default"
+
+  tags = {
+    Name = "Testremotestate"
+  }
+}
 
 terraform {
   backend "s3" {
-    bucket = "myrestatebucket1"
-    key = "myrestatebucket1.tfstate"
+    bucket = "myrestatebucket"
+    key    = "path/terraform.tfstate"
     region = "ap-south-1"
+    dynamodb_table = "terraformstate"
   }
-}
-
-resource "aws_iam_user" "user" {
-  name = "Test-user"
-  path = "/"
-
-  tags = {
-    tag-key = "tag-value"
-  }
-}
-
-resource "aws_iam_access_key" "user" {
-  user = aws_iam_user.user.name
-}
-
-resource "aws_iam_user_policy" "user_ro" {
-  name = "test"
-  user = aws_iam_user.user.name
-
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": [
-        "ec2:Describe*"
-      ],
-      "Effect": "Allow",
-      "Resource": "*"
-    }
-  ]
-}
-EOF
 }
