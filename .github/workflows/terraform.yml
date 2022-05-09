@@ -39,9 +39,9 @@ jobs:
         run: terraform plan -no-color
         continue-on-error: true
         working-directory: ./terraform/vpc/environment/dev 
-      - name: Terraform Apply
+      - name: Terraform Destroy
         id: Apply
-        run: terraform apply -auto-approve
+        run: terraform destroy -auto-approve
         continue-on-error: true
         working-directory: ./terraform/vpc/environment/dev         
           
